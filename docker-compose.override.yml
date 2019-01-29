@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  nginx:
+    volumes:
+      - codebase:/var/www/html
+
+  mariadb:
+    volumes:
+      - c:/Users/Bogdan/Documents/databases/dlog/:/var/lib/mysql
+
+volumes:
+  codebase:
