@@ -42,13 +42,13 @@ services:
 ## For XHProf and Xdebug profiler traces
 #      - files:/mnt/files
 
-  composer:
-        image: composer:1.8.0
-        container_name: "${PROJECT_NAME}_composer"
-        command: install
-        tty: true
-        volumes:
-             - ./:/var/www
+#  composer:
+#        image: composer:1.8.0
+#        container_name: "${PROJECT_NAME}_composer"
+#        command: install
+#        tty: true
+#        volumes:
+#             - ./:/var/www
 
   nginx:
     image: wodby/nginx:$NGINX_TAG
@@ -132,32 +132,32 @@ services:
 #    container_name: "${PROJECT_NAME}_redis"
 #    image: wodby/redis:$REDIS_TAG
 
-  adminer:
-    container_name: "${PROJECT_NAME}_adminer"
-    image: wodby/adminer:$ADMINER_TAG
-    environment:
-# For PostgreSQL:
-#      ADMINER_DEFAULT_DB_DRIVER: pgsql
-      ADMINER_DEFAULT_DB_HOST: $DB_HOST
-      ADMINER_DEFAULT_DB_NAME: $DB_NAME
-    labels:
-      - 'traefik.backend=${PROJECT_NAME}_adminer'
-      - 'traefik.port=9000'
-      - 'traefik.frontend.rule=Host:adminer.${PROJECT_BASE_URL}'
-
-#  pma:
-#    image: phpmyadmin/phpmyadmin
-#    container_name: "${PROJECT_NAME}_pma"
+#  adminer:
+#    container_name: "${PROJECT_NAME}_adminer"
+#    image: wodby/adminer:$ADMINER_TAG
 #    environment:
-#      PMA_HOST: $DB_HOST
-#      PMA_USER: $DB_USER
-#      PMA_PASSWORD: $DB_PASSWORD
-#      PHP_UPLOAD_MAX_FILESIZE: 1G
-#      PHP_MAX_INPUT_VARS: 1G
+## For PostgreSQL:
+##      ADMINER_DEFAULT_DB_DRIVER: pgsql
+#      ADMINER_DEFAULT_DB_HOST: $DB_HOST
+#      ADMINER_DEFAULT_DB_NAME: $DB_NAME
 #    labels:
-#      - 'traefik.backend=${PROJECT_NAME}_pma'
-#      - 'traefik.port=80'
-#      - 'traefik.frontend.rule=Host:pma.${PROJECT_BASE_URL}'
+#      - 'traefik.backend=${PROJECT_NAME}_adminer'
+#      - 'traefik.port=9000'
+#      - 'traefik.frontend.rule=Host:adminer.${PROJECT_BASE_URL}'
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: "${PROJECT_NAME}_pma"
+    environment:
+      PMA_HOST: $DB_HOST
+      PMA_USER: $DB_USER
+      PMA_PASSWORD: $DB_PASSWORD
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}_pma'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:pma.${PROJECT_BASE_URL}'
 
 #  solr:
 #    image: wodby/solr:$SOLR_TAG
